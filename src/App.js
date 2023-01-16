@@ -6,11 +6,11 @@ import QrReader from 'modern-react-qr-reader'
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import Modal from 'react-modal';
 import SoundTick from "./assets/mixkit-click-melodic-tone-1129.wav"
-
 function App() {
   const [data, setData] = useState("Not Found");
   const [scanResultQR, setScanResultQR] =  useState('');
   const [scanResultBarcode, setScanResultBarcode] =  useState('');
+  const [result,setResult] = useState("")
   const [modalIsOpen,setModalIsOpen] = useState(false)
   const [modalBarcodeIsOpen,setModalBarcodeIsOpen] = useState(false)
   const webref = useRef(null);
@@ -22,7 +22,8 @@ function App() {
   }
   const handleScanWebCam = (result) => {
     if (result){
-      setScanResultQR(result);
+      setResult(result);
+      setModalIsOpen(false)
     }
   }
 
@@ -40,29 +41,15 @@ function App() {
   };
   return (
     <div style={{}}>
-    {/* <QrReader
-      delay={300}
-      onError={handleErrorFile}
-      onScan={handleScanWebCam}
-      constraints={ {facingMode: 'environment'} }
-      style={{ width: '50%' }}
-    /> */}
-      {/* <BarcodeScannerComponent
-        width={400}
-        height={400}
-        onUpdate={(err, result) => {
-          if (result) setData(result.text);
-          else setData("Not Found");
-        }}
-      />
-      <p>{data}</p> */}
-
-    <h1>Hello world</h1>
+    <h1 style={{marginLeft:"25%"}}>Hello world</h1>
     <div style={{marginLeft:"100px"}}>
       <button onClick={()=>{setModalIsOpen(true)}}>QR code</button>
       <button onClick={()=>{setModalBarcodeIsOpen(true)}} style={{marginLeft:"30px"}}>Barcode</button>
     </div>
 
+    <div>
+      <p>Product {}</p>
+    </div>
     <div>
     <Modal
         isOpen={modalIsOpen}
@@ -80,7 +67,6 @@ function App() {
                   constraints={ {facingMode: 'environment'} }
                   style={{ width: "100%",height:"100%" }}
                />
-
                <p>{scanResultQR}</p>
           </div>
         </div>
@@ -99,9 +85,12 @@ function App() {
           <div style={{display:"block",marginTop:"30px",height:"80%",width:"80%",border:"1 px solid black"}}>
               <BarcodeScannerComponent
                 width={300}
-                height={350}
+                height={200}
                 onUpdate={(err, result) => {
-                  if (result) setData(result.text);
+                  if (result){ 
+                    setResult(result.text);
+                    setModalBarcodeIsOpen(false)
+                  }
                   else setData("Not Found");
                 }}
               />
@@ -110,6 +99,7 @@ function App() {
         </div>
       </Modal>
     </div>
+    <h2>Result : {result}</h2>
   </div>
   );
 }
