@@ -81,7 +81,7 @@ function App() {
                   style={{ width: "100%",height:"100%" }}
                />
 
-               <p></p>
+               <p>{scanResultQR}</p>
           </div>
         </div>
       </Modal>
@@ -96,10 +96,10 @@ function App() {
           <div>
           <button style={{marginLeft:"80%",marginRigt:"0px"}} onClick={()=>{setModalBarcodeIsOpen(false)}}>Close</button>
           </div>
-          <div style={{display:"block",marginTop:"30px"}}>
+          <div style={{display:"block",marginTop:"30px",height:"80%",width:"80%",border:"1 px solid black"}}>
               <BarcodeScannerComponent
-                width={400}
-                height={400}
+                width={300}
+                height={350}
                 onUpdate={(err, result) => {
                   if (result) setData(result.text);
                   else setData("Not Found");
